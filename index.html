@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Postear Comentario</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="head"><h1>Postear a Comentario</h1></div>
+        <div><span id="comment">0</span> Comentario</div>
+        <div class="text"><p>Agradesco todos tus comentario</p></div>
+        <div class="comments"></div>
+        <div class="commentbox">
+            <img src="logo.png" alt="">
+            <div class="content">
+                <h2>Comenta como:</h2>
+                <input type="text" value="Anonymous" class="user" id="">
+                <div class="commentinput">
+                    <input type="text" placeholder="Inserte comentario" class="usercomment">
+                    <div class="buttons">
+                        <button type="submit" disabled id="publish">Publicar</button>
+                        <div class="notify">
+                            <input type="checkbox" name="" value="" class="notifyinput"><span>Notificame</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="policy">Este sitio esta protegido por reCATCHA, por la <a href="#">políticas de privacidad</a> y <a href="#">termino y condiciones</a> de Google</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        "use strict";
+
+        const userId = {
+            name: null,
+            identity: null,
+            image: null,
+            message: null,
+            date: null
+        }
+
+        const userComment = document.querySelector(".usercomment"); // caja de comentario
+        const publishBtn = document.querySelector("#publish"); //Boton de publicar
+        const comment = document.querySelector(".comments"); //Es un div 
+        const userName = document.querySelector(".user");
+
+        userComment.addEventListener("input", e => {
+            if (!userComment.value) {
+                publishBtn.setAttribute("disabled","disabled");
+                publishBtn.setAttribute("abled")
+            } else {
+                publishBtn.removeAttribute("disabled");
+                publishBtn.classList.add("abled")
+            }
+        })
+
+        function addPost() {
+            // console.log("Funcionó")
+            if (!userComment.value) return;
+            userId.name = userName.value;
+            if (userId==="Anonymous") {
+                userId.identity = false;
+                userId.image="anonymous.png";
+            } else {
+                userId.identity = true;
+                userId.image = "logo.png"
+            }
+
+            userId.message = userComment.value;
+            userId.date = new Date().toDateString();
+            let published = 
+            `<div class="parents">
+                <img src="${userId.image}">
+                <div>
+                    <h1>${userId.name}</h1>
+                    <p>${userId.message}</p>
+                    <div class="engagements"><img src="like.png"><img src="share.png"></div>
+                    <span class="date">${userId.date}</span>
+                </div>
+            </div>`;
+
+            comment.innerHTML += published;
+            userComment.value ="";
+
+            let commentNum = document.querySelectorAll(".parents").length;
+            document.getElementById("comment").textContent = commentNum;
+        }
+
+        publishBtn.addEventListener("click", addPost)
+        
+    </script>
+</body>
+</html>
